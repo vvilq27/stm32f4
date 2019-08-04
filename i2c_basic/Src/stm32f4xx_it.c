@@ -204,18 +204,19 @@ void DCMI_IRQHandler(void)
 {
   /* USER CODE BEGIN DCMI_IRQn 0 */
 //	printf("%04X\r\n", &hdcmi.Instance->SR);
-	printf("ATR %02X\r\n", (uint32_t *) DCMI->SR);
+	printf("ATR %02X %02X %02X\r\n", (uint32_t *) DCMI->RISR, (uint32_t *) DCMI->SR, (uint32_t *) DCMI->MISR);
 
-	if ( ((uint32_t) &hdcmi.Instance->CR & DCMI_SR_VSYNC) == DCMI_SR_VSYNC)
-	{
-		printf("j\r\n");
-	}
+//	uint32_t data = (uint32_t *) DCMI->SR;
+//	if ( ( data & (uint32_t) 2) == 2)
+//	{
+//		printf("j\r\n");
+//	}
 	__HAL_DCMI_CLEAR_FLAG(&hdcmi, 0x1F);
-	printf("ATR2 %02X\r\n", (uint32_t *) DCMI->SR);
+	printf("ATR %02X %02X %02X\r\n", (uint32_t *) DCMI->RISR, (uint32_t *) DCMI->SR, (uint32_t *) DCMI->MISR);
   /* USER CODE END DCMI_IRQn 0 */
   HAL_DCMI_IRQHandler(&hdcmi);
   /* USER CODE BEGIN DCMI_IRQn 1 */
-//  printf("==%04X\r\n", &hdcmi.Instance->SR);
+	printf("ATR %02X %02X %02X\r\n", (uint32_t *) DCMI->RISR, (uint32_t *) DCMI->SR, (uint32_t *) DCMI->MISR);
   /* USER CODE END DCMI_IRQn 1 */
 }
 

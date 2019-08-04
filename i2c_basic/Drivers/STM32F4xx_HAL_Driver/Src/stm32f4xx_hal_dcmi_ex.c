@@ -118,12 +118,6 @@ HAL_StatusTypeDef HAL_DCMI_Init(DCMI_HandleTypeDef *hdcmi)
 #endif /* STM32F446xx || STM32F469xx || STM32F479xx */
                            );
 
-
-  printf("CR = %04X\r\n", (uint32_t)(hdcmi->Init.SynchroMode | hdcmi->Init.CaptureRate | \
-                                     hdcmi->Init.VSPolarity  | hdcmi->Init.HSPolarity  | \
-                                     hdcmi->Init.PCKPolarity | hdcmi->Init.ExtendedDataMode | \
-                                     hdcmi->Init.JPEGMode));
-
   hdcmi->Instance->CR |=  (uint32_t)(hdcmi->Init.SynchroMode | hdcmi->Init.CaptureRate |\
                                      hdcmi->Init.VSPolarity  | hdcmi->Init.HSPolarity  |\
                                      hdcmi->Init.PCKPolarity | hdcmi->Init.ExtendedDataMode |\

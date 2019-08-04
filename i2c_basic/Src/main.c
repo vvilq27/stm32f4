@@ -76,100 +76,16 @@ static void MX_DCMI_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-//void I2C_Scan() {
-//    char info[] = "Scanning I2C bus...\r\n";
-//    HAL_UART_Transmit(&huart2, (uint8_t*)info, strlen(info), HAL_MAX_DELAY);
-//
-//    HAL_StatusTypeDef res;
-//    for(uint16_t i = 0; i < 128; i++) {
-//        res = HAL_I2C_IsDeviceReady(&hi2c1, i << 1, 1, 10);
-//        if(res == HAL_OK) {
-//            char msg[64];
-//            snprintf(msg, sizeof(msg), "0x%02X", i);
-//            HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
-//        } else {
-//            HAL_UART_Transmit(&huart2, (uint8_t*)".", 1, HAL_MAX_DELAY);
-//        }
-//    }
-//
-//    HAL_UART_Transmit(&huart2, (uint8_t*)"\r\n", 2, HAL_MAX_DELAY);
-//}
-
 uint8_t data;
 
 void init() {
-//    I2C_Scan();
-//	ssd1306_TestAll();
-//	ssd1306_Init();
-//	ssd1306_WriteCommand(0x12, 0x80); //display off
-
-	/*
- HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
- HAL_Delay(20);
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
-  HAL_Delay(20);
-  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-
-  printf("CR1 : 0x%04X\r\n", I2C1 ->CR1);
-  printf("CR2 : 0x%04X\r\n", I2C1 ->CR2);
-
-
-    printf("uno: 0x%04X\r\n", I2C1->SR1);
-    printf("due 0x%04X\r\n", I2C1->SR2);
-	I2C1->CR1 |= I2C_CR1_START;
-	uint32_t flag1 = 0, flag2 = 0;
-	uint32_t lastevent = 0;
-
-	flag1 = I2C1->SR1;
-	  flag2 = I2C1->SR2;
-	  flag2 = flag2 << 16;
-
-  lastevent = (flag1 | flag2);
-
-  while ((lastevent & (uint32_t)0x00030001) != (uint32_t)0x00030001)
-    {
-      printf("uno: 0x%04X\r\n", I2C1->SR1);
-      printf("due 0x%04X\r\n", I2C1->SR2);
-      lastevent = (I2C1->SR1 | (I2C1->SR2 << 16));
-    }
-
-  if( (I2C1 ->SR1 & I2C_FLAG_ADDR) != I2C_FLAG_ADDR){
-  	  printf("addr not sent\r\n");
-  }
-
-  I2C1->DR = 0x42;
-
-  while( (I2C1 ->SR1 & I2C_FLAG_ADDR) != I2C_FLAG_ADDR ){
-//	  printf("addr not sent\r\n");
-  }
-
-  I2C1->DR = 0x12;
-
-
-*/
-
 	for(int i = 0; i < 198 ; i ++){
 		HAL_I2C_Mem_Write(&hi2c2, (0x21<<1), OV7670_reg[i][0], 1, &OV7670_reg[i][1], 1, 100);
 		HAL_Delay(1);
 		HAL_I2C_Mem_Read(&hi2c2, (0x21<<1), OV7670_reg[i][0], 1, &data, 1, 100);
-//		printf("0x%02X == 0x%02X\r\n", OV7670_reg[i][0], data);
 	}
-
-
-
-	//TEST
-//	HAL_I2C_Mem_Read(&hi2c2, (0x21<<1), 0x15, 1, &data, 1, 100);
-//	HAL_Delay(10);
-//	HAL_I2C_Mem_Write(&hi2c2, (0x21<<1), 0x12, 1, 0x01, 1, 100);
-//	HAL_Delay(5);
-////	HAL_I2C_Mem_Write(&hi2c1, (0x21<<1), 0x12, 1, 0x81, 1, 100);
-//	HAL_I2C_Mem_Read(&hi2c2, (0x21<<1), 0x12, 1, &data, 1, 100);
-
 }
 
-void loop() {
-	HAL_Delay(100);
-}
 /* USER CODE END 0 */
 
 /**
@@ -209,34 +125,9 @@ int main(void)
   HAL_TIM_Base_Start(&htim2);
   HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_1);
 
-//HAL_DCMI_Start_DMA(hdcmi, DCMI_Mode, pData, Length)
-
   /* USER CODE BEGIN 2 */
-//  DWT_Init();
-
-//  HAL_UART_Transmit(&huart2, "hello!\r\n", sizeof("hello!\r\n"), 100);
-  printf("sztartne!\r\n");
 
   init();
-
-//  char m[8];
-
-//  snprintf(m, sizeof(m), "%d\r\n", DWT_COUNTER_ENABLE());
-//  HAL_UART_Transmit(&huart2, (uint8_t*)m, strlen(m), HAL_MAX_DELAY);
-
-//  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
-//  DWT_Delay(20);
-//  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-//  DWT_Delay(15);
-//  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
-//  DWT_Delay(10);
-//  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-//  DWT_Delay(40);
-//  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
-//  DWT_Delay(10);
-//  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
-//  DWT_Delay(20);
-
 
   /* USER CODE END 2 */
 
@@ -248,8 +139,6 @@ int main(void)
   DCMI->CR |= (uint32_t)DCMI_CR_CAPTURE;
   DCMI->CR |= (uint32_t)DCMI_CR_ENABLE;
   __HAL_DCMI_DISABLE_IT(&hdcmi, DCMI_IT_LINE | DCMI_IT_OVR | DCMI_IT_ERR | DCMI_IT_FRAME | DCMI_IT_OVF);
-
-//  __HAL_DCMI_DISABLE_IT(&hdcmi,  DCMI_IT_OVR);
 
   printf("CR b4 while: %02X\r\n", (uint32_t *)DCMI->CR);
   printf("SR b4 while: %02X\r\n", (uint32_t *)DCMI->SR);
@@ -264,21 +153,13 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-//	  snprintf(m, sizeof(m), "%d", DWT->CYCCNT);
-//	HAL_UART_Transmit(&huart2, (uint8_t*)m, strlen(m), HAL_MAX_DELAY);
-//	HAL_UART_Transmit(&huart2, "\r\n", sizeof("\r\n"), HAL_MAX_DELAY);
 
+//	  data = (uint32_t *)DCMI-> DR;
+//	  if( data != 0){
+//		  printf("%04X\r\n", data);
+//	  }
 
-//	  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-//	  DWT_Delay(4);
-//	  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-//	  DWT_Delay(5);
-
-//	  HAL_Delay(10);
-	  data = (uint32_t *)DCMI-> DR;
-	  if( data != 0){
-		  printf("%04X\r\n", data);
-	  }
+//	  printf("=======SR %02X\r\n", (uint32_t *) DCMI->SR);
 
 
   }
@@ -348,7 +229,7 @@ static void MX_DCMI_Init(void)
   hdcmi.Init.SynchroMode = DCMI_SYNCHRO_HARDWARE;
   hdcmi.Init.PCKPolarity = DCMI_PCKPOLARITY_FALLING;
   hdcmi.Init.VSPolarity = DCMI_VSPOLARITY_LOW;
-  hdcmi.Init.HSPolarity = DCMI_VSPOLARITY_HIGH;
+  hdcmi.Init.HSPolarity = DCMI_HSPOLARITY_LOW;
   hdcmi.Init.CaptureRate = DCMI_CR_ALL_FRAME;
   hdcmi.Init.ExtendedDataMode = DCMI_EXTEND_DATA_8B;
   hdcmi.Init.JPEGMode = DCMI_JPEG_DISABLE;
@@ -361,6 +242,8 @@ static void MX_DCMI_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN DCMI_Init 2 */
+
+  // VS HS POL low, inaczej nie dziala
 
   /* USER CODE END DCMI_Init 2 */
 
