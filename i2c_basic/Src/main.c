@@ -48,17 +48,21 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-DCMI_HandleTypeDef hdcmi;
-
 I2C_HandleTypeDef hi2c2;
 
 TIM_HandleTypeDef htim2;
+TIM_HandleTypeDef htim6;
 
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
+#define ROWS 240
+#define PIXS 321
 
-volatile uint16_t pxCnt;
+volatile uint16_t vsCnt, pxCnt;
+volatile uint16_t line;
+
+uint8_t tab[ROWS][PIXS];
 
 /* USER CODE END PV */
 
@@ -68,7 +72,7 @@ static void MX_GPIO_Init(void);
 static void MX_I2C2_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM2_Init(void);
-static void MX_DCMI_Init(void);
+static void MX_TIM6_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -79,11 +83,18 @@ static void MX_DCMI_Init(void);
 uint8_t data;
 
 void init() {
-	for(int i = 0; i < 198 ; i ++){
-		HAL_I2C_Mem_Write(&hi2c2, (0x21<<1), OV7670_reg[i][0], 1, &OV7670_reg[i][1], 1, 100);
-		HAL_Delay(1);
-		HAL_I2C_Mem_Read(&hi2c2, (0x21<<1), OV7670_reg[i][0], 1, &data, 1, 100);
-	}
+//	for(int i = 0; i < 198 ; i ++){
+//		HAL_I2C_Mem_Write(&hi2c2, (0x21<<1), OV7670_reg[i][0], 1, &OV7670_reg[i][1], 1, 100);
+//		HAL_Delay(1);
+//		HAL_I2C_Mem_Read(&hi2c2, (0x21<<1), OV7670_reg[i][0], 1, &data, 1, 100);
+//	}
+
+	HAL_I2C_Mem_Read(&hi2c2, (0x21<<1), 0x11, 1, &data, 1, 100);
+	HAL_Delay(10);
+	HAL_I2C_Mem_Read(&hi2c2, (0x21<<1), 0x12, 1, &data, 1, 100);
+	HAL_Delay(10);
+	HAL_I2C_Mem_Read(&hi2c2, (0x21<<1), 0x17, 1, &data, 1, 100);
+	HAL_Delay(10);
 }
 
 /* USER CODE END 0 */
@@ -120,12 +131,13 @@ int main(void)
   MX_I2C2_Init();
   MX_USART2_UART_Init();
   MX_TIM2_Init();
-  MX_DCMI_Init();
+  MX_TIM6_Init();
+  /* USER CODE BEGIN 2 */
 
+//  HAL_TIM_Base_Start_IT(&htim6);
   HAL_TIM_Base_Start(&htim2);
   HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_1);
 
-  /* USER CODE BEGIN 2 */
 
   init();
 
@@ -134,17 +146,18 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-  printf("CR b4 while: %02X\r\n", (uint32_t *)DCMI->CR);
 
-  DCMI->CR |= (uint32_t)DCMI_CR_CAPTURE;
-  DCMI->CR |= (uint32_t)DCMI_CR_ENABLE;
-  __HAL_DCMI_DISABLE_IT(&hdcmi, DCMI_IT_LINE | DCMI_IT_OVR | DCMI_IT_ERR | DCMI_IT_FRAME | DCMI_IT_OVF);
+//  printf("CR b4 while: %02X\r\n", (uint32_t *)DCMI->CR);
+//
+//  DCMI->CR |= (uint32_t)DCMI_CR_CAPTURE;
+//  DCMI->CR |= (uint32_t)DCMI_CR_ENABLE;
+//  __HAL_DCMI_DISABLE_IT(&hdcmi, DCMI_IT_LINE | DCMI_IT_OVR | DCMI_IT_ERR | DCMI_IT_FRAME | DCMI_IT_OVF);
 
-  printf("CR b4 while: %02X\r\n", (uint32_t *)DCMI->CR);
-  printf("SR b4 while: %02X\r\n", (uint32_t *)DCMI->SR);
-  printf("IER b4 while: %02X\r\n", (uint32_t *)DCMI->IER);
-  printf("MISR b4 while: %02X\r\n", (uint32_t *)DCMI->MISR);
-  printf("RISR b4 while: %02X\r\n", (uint32_t *)DCMI->RISR);
+//  printf("CR b4 while: %02X\r\n", (uint32_t *)DCMI->CR);
+//  printf("SR b4 while: %02X\r\n", (uint32_t *)DCMI->SR);
+//  printf("IER b4 while: %02X\r\n", (uint32_t *)DCMI->IER);
+//  printf("MISR b4 while: %02X\r\n", (uint32_t *)DCMI->MISR);
+//  printf("RISR b4 while: %02X\r\n", (uint32_t *)DCMI->RISR);
 
   uint32_t data;
 
@@ -153,18 +166,67 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  //pin toggle test
+	  while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_10) == GPIO_PIN_RESET ){
+		  while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_9) == GPIO_PIN_RESET);
 
-//	  data = (uint32_t *)DCMI-> DR;
-//	  if( data != 0){
-//		  printf("%04X\r\n", data);
-//	  }
+		 while( (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_9) == GPIO_PIN_SET ) ){
+//			 while( (GPIOC->IDR & GPIO_PIN_8) == 0 );
+////			 tab[line][pxCnt++] = (GPIOC->IDR & 0xff);
+////			 HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_11);
+////			 HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_11);
+//
+//			 while( (GPIOC->IDR & GPIO_PIN_8) == GPIO_PIN_8 );
+////			 printf("%d,", (GPIOC->IDR & 0xff));
+//
+//			 while( (GPIOC->IDR & GPIO_PIN_8) == 0 );
+//			 while( (GPIOC->IDR & GPIO_PIN_8) == GPIO_PIN_8 );
+		 }
 
-//	  printf("=======SR %02X\r\n", (uint32_t *) DCMI->SR);
+//		 printf("%d,", pxCnt);
+		 pxCnt = 0;
+
+//		 if(line < ROWS-1)
+		 if(line++ > 480){
+			 break;
+		 }
+
+//		 GPIOC->BSRR = GPIO_PIN_11;
+//		 GPIOC->BSRR = (uint32_t)GPIO_PIN_11 << 16;
+
+		 HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_11);
+		 HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_11);
+
+		 //line low
+		 while( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_9) == GPIO_PIN_RESET  ){
+			 if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_10) == GPIO_PIN_SET){
+				 break;
+			 }
+		 }
 
 
-  }
+
+	  }//end of VS
+
+//		for(int i = 0; i < ROWS; i++){
+//			for(int j = 0; j < PIXS; j++){
+////				printf("%d,", tab[i][j]);
+//			}
+////			printf("%d\r\n", i);
+//		}
+
+		 printf("\r\nhscnt: %d\r\n", line);
+		line = 0;
+
+		while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_9) == GPIO_PIN_RESET);
+//		HAL_Delay(300);
+
+//		while( (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_9) == GPIO_PIN_RESET)  &&
+//						 (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_10) == GPIO_PIN_RESET));
+
+	 }// MAIN while
   /* USER CODE END 3 */
-}
+}//main
 
 /**
   * @brief System Clock Configuration
@@ -178,7 +240,7 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage 
   */
   __HAL_RCC_PWR_CLK_ENABLE();
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
   /** Initializes the CPU, AHB and APB busses clocks 
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
@@ -187,11 +249,17 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = 8;
-  RCC_OscInitStruct.PLL.PLLN = 90;
+  RCC_OscInitStruct.PLL.PLLN = 180;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 2;
   RCC_OscInitStruct.PLL.PLLR = 2;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** Activate the Over-Drive mode 
+  */
+  if (HAL_PWREx_EnableOverDrive() != HAL_OK)
   {
     Error_Handler();
   }
@@ -201,52 +269,13 @@ void SystemClock_Config(void)
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
   {
     Error_Handler();
   }
-}
-
-/**
-  * @brief DCMI Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_DCMI_Init(void)
-{
-
-  /* USER CODE BEGIN DCMI_Init 0 */
-
-  /* USER CODE END DCMI_Init 0 */
-
-  /* USER CODE BEGIN DCMI_Init 1 */
-
-  /* USER CODE END DCMI_Init 1 */
-  hdcmi.Instance = DCMI;
-  hdcmi.Init.SynchroMode = DCMI_SYNCHRO_HARDWARE;
-  hdcmi.Init.PCKPolarity = DCMI_PCKPOLARITY_FALLING;
-  hdcmi.Init.VSPolarity = DCMI_VSPOLARITY_LOW;
-  hdcmi.Init.HSPolarity = DCMI_HSPOLARITY_LOW;
-  hdcmi.Init.CaptureRate = DCMI_CR_ALL_FRAME;
-  hdcmi.Init.ExtendedDataMode = DCMI_EXTEND_DATA_8B;
-  hdcmi.Init.JPEGMode = DCMI_JPEG_DISABLE;
-  hdcmi.Init.ByteSelectMode = DCMI_BSM_ALL;
-  hdcmi.Init.ByteSelectStart = DCMI_OEBS_ODD;
-  hdcmi.Init.LineSelectMode = DCMI_LSM_ALL;
-  hdcmi.Init.LineSelectStart = DCMI_OELS_ODD;
-  if (HAL_DCMI_Init(&hdcmi) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN DCMI_Init 2 */
-
-  // VS HS POL low, inaczej nie dziala
-
-  /* USER CODE END DCMI_Init 2 */
-
 }
 
 /**
@@ -292,7 +321,7 @@ static void MX_TIM2_Init(void)
 {
 
   /* USER CODE BEGIN TIM2_Init 0 */
-	printf("timer setup");
+
   /* USER CODE END TIM2_Init 0 */
 
   TIM_ClockConfigTypeDef sClockSourceConfig = {0};
@@ -303,9 +332,9 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 9;
+  htim2.Init.Prescaler = 1;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 1;
+  htim2.Init.Period = 9;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -328,7 +357,7 @@ static void MX_TIM2_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM2;
-  sConfigOC.Pulse = 1;
+  sConfigOC.Pulse = 4;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
@@ -339,6 +368,45 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 2 */
   HAL_TIM_MspPostInit(&htim2);
+
+}
+
+/**
+  * @brief TIM6 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM6_Init(void)
+{
+
+  /* USER CODE BEGIN TIM6_Init 0 */
+
+  /* USER CODE END TIM6_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM6_Init 1 */
+
+  /* USER CODE END TIM6_Init 1 */
+  htim6.Instance = TIM6;
+  htim6.Init.Prescaler = 9000;
+  htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim6.Init.Period = 10000;
+  htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM6_Init 2 */
+  printf("tim setup done 6\r\n");
+
+  /* USER CODE END TIM6_Init 2 */
 
 }
 
@@ -358,13 +426,13 @@ static void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 1000000;
+  huart2.Init.BaudRate = 2000000;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
   huart2.Init.Mode = UART_MODE_TX_RX;
   huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+  huart2.Init.OverSampling = UART_OVERSAMPLING_8;
   if (HAL_UART_Init(&huart2) != HAL_OK)
   {
     Error_Handler();
@@ -385,12 +453,25 @@ static void MX_GPIO_Init(void)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_11, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : PC0 PC1 PC2 PC3 
+                           PC4 PC5 PC6 PC7 
+                           PC8 PC9 PC10 */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3 
+                          |GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7 
+                          |GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PA5 */
   GPIO_InitStruct.Pin = GPIO_PIN_5;
@@ -398,6 +479,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PC11 */
+  GPIO_InitStruct.Pin = GPIO_PIN_11;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 }
 

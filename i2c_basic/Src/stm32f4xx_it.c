@@ -56,8 +56,10 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern DCMI_HandleTypeDef hdcmi;
+extern TIM_HandleTypeDef htim6;
 /* USER CODE BEGIN EV */
+extern volatile uint16_t vsCnt, hsCnt, pxCnt;
+extern uint8_t tab[100][360];
 
 /* USER CODE END EV */
 
@@ -198,26 +200,25 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
-  * @brief This function handles DCMI global interrupt.
+  * @brief This function handles TIM6 global interrupt and DAC1, DAC2 underrun error interrupts.
   */
-void DCMI_IRQHandler(void)
+void TIM6_DAC_IRQHandler(void)
 {
-  /* USER CODE BEGIN DCMI_IRQn 0 */
-//	printf("%04X\r\n", &hdcmi.Instance->SR);
-	printf("ATR %02X %02X %02X\r\n", (uint32_t *) DCMI->RISR, (uint32_t *) DCMI->SR, (uint32_t *) DCMI->MISR);
+  /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
+//	uint32_t cr = DCMI->CR;
+//	if( (cr & DCMI_CR_ENABLE) == DCMI_CR_ENABLE)
+//		DCMI->CR &= ~(uint32_t) DCMI_CR_ENABLE;
+//	else
+//		DCMI->CR |= (uint32_t) DCMI_CR_ENABLE;
 
-//	uint32_t data = (uint32_t *) DCMI->SR;
-//	if ( ( data & (uint32_t) 2) == 2)
-//	{
-//		printf("j\r\n");
-//	}
-	__HAL_DCMI_CLEAR_FLAG(&hdcmi, 0x1F);
-	printf("ATR %02X %02X %02X\r\n", (uint32_t *) DCMI->RISR, (uint32_t *) DCMI->SR, (uint32_t *) DCMI->MISR);
-  /* USER CODE END DCMI_IRQn 0 */
-  HAL_DCMI_IRQHandler(&hdcmi);
-  /* USER CODE BEGIN DCMI_IRQn 1 */
-	printf("ATR %02X %02X %02X\r\n", (uint32_t *) DCMI->RISR, (uint32_t *) DCMI->SR, (uint32_t *) DCMI->MISR);
-  /* USER CODE END DCMI_IRQn 1 */
+	printf("tim6int\r\n");
+
+
+  /* USER CODE END TIM6_DAC_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim6);
+  /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
+
+  /* USER CODE END TIM6_DAC_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

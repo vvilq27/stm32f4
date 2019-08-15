@@ -20,8 +20,6 @@ Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.o: \
  C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h \
  C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h \
  C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h \
- C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dcmi.h \
- C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dcmi_ex.h \
  C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h \
  C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h \
  C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h \
@@ -72,10 +70,6 @@ C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Drive
 C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h:
 
 C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h:
-
-C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dcmi.h:
-
-C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dcmi_ex.h:
 
 C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h:
 
