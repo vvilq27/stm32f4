@@ -1,0 +1,91 @@
+11:54:53 **** Incremental Build of configuration Debug for project uart_usb ****
+make -j12 all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+C:\Users\arkadiusz.zelazowski\STMworkspace\uart_usb\Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F446xx -I"C:/Users/arkadiusz.zelazowski/STMworkspace/uart_usb/Inc" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/uart_usb/Drivers/STM32F4xx_HAL_Driver/Inc" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/uart_usb/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/uart_usb/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/uart_usb/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+../Src/main.c: In function 'main':
+../Src/main.c:329:3: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+   printf("\r\n\r\n");
+   ^~~~~~
+../Src/main.c:329:3: warning: incompatible implicit declaration of built-in function 'printf'
+../Src/main.c:329:3: note: include '<stdio.h>' or provide a declaration of 'printf'
+../Src/main.c:344:25: error: macro "__HAL_TIM_SET_COMPARE" requires 3 arguments, but only 1 given
+   __HAL_TIM_SET_COMPARE()
+                         ^
+../Src/main.c:344:3: error: unknown type name '__HAL_TIM_SET_COMPARE'
+   __HAL_TIM_SET_COMPARE()
+   ^~~~~~~~~~~~~~~~~~~~~
+../Src/main.c:352:12: error: expected declaration specifiers or '...' before string constant
+     printf("i2c setup 0x%X === 0x%x\r\n", (hi2c2.Instance->CR1 & 0xffff), I2C2->CR1);
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Src/main.c:352:43: error: expected declaration specifiers or '...' before '(' token
+     printf("i2c setup 0x%X === 0x%x\r\n", (hi2c2.Instance->CR1 & 0xffff), I2C2->CR1);
+                                           ^
+In file included from C:/Users/arkadiusz.zelazowski/STMworkspace/uart_usb/Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:173:0,
+                 from C:/Users/arkadiusz.zelazowski/STMworkspace/uart_usb/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h:30,
+                 from C:/Users/arkadiusz.zelazowski/STMworkspace/uart_usb/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:29,
+                 from C:/Users/arkadiusz.zelazowski/STMworkspace/uart_usb/Inc/stm32f4xx_hal_conf.h:232,
+                 from C:/Users/arkadiusz.zelazowski/STMworkspace/uart_usb/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:30,
+                 from C:/Users/arkadiusz.zelazowski/STMworkspace/uart_usb/Inc/main.h:31,
+                 from ../Src/main.c:22:
+C:/Users/arkadiusz.zelazowski/STMworkspace/uart_usb/Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h:1105:29: error: expected declaration specifiers or '...' before '(' token
+ #define I2C2                ((I2C_TypeDef *) I2C2_BASE)
+                             ^
+../Src/main.c:352:75: note: in expansion of macro 'I2C2'
+     printf("i2c setup 0x%X === 0x%x\r\n", (hi2c2.Instance->CR1 & 0xffff), I2C2->CR1);
+                                                                           ^~~~
+../Src/main.c:357:24: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t {aka volatile long unsigned int}' [-Wformat=]
+    printf("SB flag: 0x%x \r\n", hi2c2.Instance->SR1);
+                       ~^        ~~~~~~~~~~~~~~~~~~~
+                       %lx
+../Src/main.c:324:21: warning: unused variable 'ret' [-Wunused-variable]
+   HAL_StatusTypeDef ret;
+                     ^~~
+../Src/main.c:307:11: warning: unused variable 'retDat' [-Wunused-variable]
+   uint8_t retDat;
+           ^~~~~~
+../Src/main.c:306:11: warning: unused variable 'dat' [-Wunused-variable]
+   uint8_t dat = 0x8F;
+           ^~~
+../Src/main.c: In function 'MX_I2C2_Init':
+../Src/main.c:534:3: warning: incompatible implicit declaration of built-in function 'printf'
+   printf("I2C init start");
+   ^~~~~~
+../Src/main.c:534:3: note: include '<stdio.h>' or provide a declaration of 'printf'
+../Src/main.c: In function 'ov7670_write':
+../Src/main.c:742:2: warning: incompatible implicit declaration of built-in function 'printf'
+  printf("%d \r\n", ret);
+  ^~~~~~
+../Src/main.c:742:2: note: include '<stdio.h>' or provide a declaration of 'printf'
+../Src/main.c: In function 'ov7670_config':
+../Src/main.c:749:3: warning: implicit declaration of function 'ov7670_stopCap'; did you mean 'ov7670_config'? [-Wimplicit-function-declaration]
+   ov7670_stopCap();
+   ^~~~~~~~~~~~~~
+   ov7670_config
+../Src/main.c:758:3: warning: incompatible implicit declaration of built-in function 'printf'
+   printf("REG WRITE DONE! \r\n");
+   ^~~~~~
+../Src/main.c:758:3: note: include '<stdio.h>' or provide a declaration of 'printf'
+../Src/main.c: At top level:
+../Src/main.c:777:6: warning: conflicting types for 'ov7670_stopCap'
+ void ov7670_stopCap()
+      ^~~~~~~~~~~~~~
+../Src/main.c:749:3: note: previous implicit declaration of 'ov7670_stopCap' was here
+   ov7670_stopCap();
+   ^~~~~~~~~~~~~~
+../Src/main.c: In function 'ov7670_stopCap':
+../Src/main.c:781:3: warning: incompatible implicit declaration of built-in function 'printf'
+   printf("CAM STOP\r\n");
+   ^~~~~~
+../Src/main.c:781:3: note: include '<stdio.h>' or provide a declaration of 'printf'
+../Src/main.c: In function 'Error_Handler':
+../Src/main.c:794:2: warning: incompatible implicit declaration of built-in function 'printf'
+  printf("ERROR!\r\n");
+  ^~~~~~
+../Src/main.c:794:2: note: include '<stdio.h>' or provide a declaration of 'printf'
+make: *** [Src/main.o] Error 1
+Src/subdir.mk:30: recipe for target 'Src/main.o' failed
+
+11:54:55 Build Finished (took 1s.949ms)
+

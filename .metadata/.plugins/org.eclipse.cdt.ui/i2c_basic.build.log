@@ -1,0 +1,45 @@
+02:06:02 **** Incremental Build of configuration Debug for project i2c_basic ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+C:\Users\arkadiusz.zelazowski\STMworkspace\i2c_basic\Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F446xx -I"C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Inc" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Driver/Inc" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+../Src/main.c: In function 'init':
+../Src/main.c:89:61: warning: passing argument 5 of 'HAL_I2C_Mem_Write' discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
+   HAL_I2C_Mem_Write(&hi2c2, (0x21<<1), OV7670_reg[i][0], 1, &OV7670_reg[i][1], 1, 100);
+                                                             ^
+In file included from C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Inc/stm32f4xx_hal_conf.h:312:0,
+                 from C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:30,
+                 from C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Inc/main.h:31,
+                 from ../Src/main.c:22:
+C:/Users/arkadiusz.zelazowski/STMworkspace/i2c_basic/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h:566:19: note: expected 'uint8_t * {aka unsigned char *}' but argument is of type 'const uint8_t * {aka const unsigned char *}'
+ HAL_StatusTypeDef HAL_I2C_Mem_Write(I2C_HandleTypeDef *hi2c, uint16_t DevAddress, uint16_t MemAddress, uint16_t MemAddSize, uint8_t *pData, uint16_t Size, uint32_t Timeout);
+                   ^~~~~~~~~~~~~~~~~
+../Src/main.c: In function 'MX_TIM6_Init':
+../Src/main.c:410:3: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+   printf("tim setup done 6\r\n");
+   ^~~~~~
+../Src/main.c:410:3: warning: incompatible implicit declaration of built-in function 'printf'
+../Src/main.c:410:3: note: include '<stdio.h>' or provide a declaration of 'printf'
+../Src/main.c: In function 'Error_Handler':
+../Src/main.c:541:2: warning: incompatible implicit declaration of built-in function 'printf'
+  printf("ERROR!");
+  ^~~~~~
+../Src/main.c:541:2: note: include '<stdio.h>' or provide a declaration of 'printf'
+Finished building: ../Src/main.c
+ 
+Building target: i2c_basic.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "i2c_basic.elf" @"objects.list"   -lm
+Finished building target: i2c_basic.elf
+ 
+make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "i2c_basic.elf" "i2c_basic.hex"
+arm-none-eabi-size "i2c_basic.elf"
+   text	   data	    bss	    dec	    hex	filename
+  17568	    120	  78776	  96464	  178d0	i2c_basic.elf
+ 
+
+02:06:18 Build Finished (took 15s.972ms)
+

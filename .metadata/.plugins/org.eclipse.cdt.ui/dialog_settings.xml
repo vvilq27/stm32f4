@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.cdt.ui.OPEN_ACTION_SELECTION_DIALOG_SECTION">
+		<item value="952" key="DIALOG_WIDTH"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+		<item value="575" key="DIALOG_HEIGHT"/>
+		<item value="706" key="DIALOG_X_ORIGIN"/>
+		<item value="141" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration.internal">
+		<item value="180" key="size.height"/>
+		<item value="512" key="size.width"/>
+	</section>
+	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration">
+	</section>
+	<section name="PDOMSearchPage">
+		<item value="false" key="caseSensitive"/>
+		<item value="227191" key="searchFlags"/>
+		<list key="previousPatterns">
+			<item value="TIM6_IRQHandler"/>
+			<item value="cld"/>
+			<item value="enabled"/>
+			<item value="HAL_TIM_Base_MspInit"/>
+			<item value="HAL_TIM_Base_Init"/>
+			<item value="__HAL_RCC_DCMI_CLK_ENABLE"/>
+			<item value="GPIOA"/>
+			<item value="i2c2"/>
+			<item value="DWT_CYCCNT"/>
+			<item value="7bitaddr"/>
+			<item value="I2C_EVENT_MASTER_MODE_SELECT"/>
+			<item value="I2C_GenerateSTART"/>
+			<item value="systick"/>
+			<item value="alternate"/>
+			<item value="GPIO_PIN_9"/>
+			<item value="hdma_dcmi"/>
+			<item value="p_hdma_dcmi"/>
+			<item value="sp_hdma_dcmi"/>
+			<item value="HAL_TIM_Base_Start"/>
+			<item value="delay"/>
+			<item value="HAL_UART_Transmit"/>
+			<item value="uart_trans"/>
+			<item value="NVIC_EnableIRQ"/>
+			<item value="TIM_ClockConfigTypeDef"/>
+		</list>
+	</section>
+	<section name="NewClassWizardPage">
+	</section>
+	<section name="OptionalMessageDialog.hide.">
+		<item value="0" key="askReindex.detail"/>
+	</section>
+	<section name="completion_proposal_size">
+		<item value="316" key="size.y"/>
+		<item value="1001" key="size.x"/>
+	</section>
+</section>

@@ -1,0 +1,16 @@
+11:29:06 **** Incremental Build of configuration Debug for project stm32-ov7670-master ****
+make all 
+Building file: ../src/OV7670_control.c
+Invoking: MCU GCC Compiler
+C:\Users\arkadiusz.zelazowski\STMworkspace\stm32-ov7670-master\Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DSTM32F446RETx -DNUCLEO_F446RE -DSTM32 -DSTM32F4 -DDEBUG -DUSE_STDPERIPH_DRIVER -DSTM32F446xx -I"C:/Users/arkadiusz.zelazowski/STMworkspace/stm32-ov7670-master/inc" -O0 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -MMD -MP -MF"src/OV7670_control.d" -MT"src/OV7670_control.o" -o "src/OV7670_control.o" "../src/OV7670_control.c"
+In file included from ../src/OV7670_control.c:27:0:
+C:/Users/arkadiusz.zelazowski/STMworkspace/stm32-ov7670-master/inc/OV7670_control.h:38:10: fatal error: stm32f4xx.h: No such file or directory
+ #include "stm32f4xx.h"
+          ^~~~~~~~~~~~~
+compilation terminated.
+src/subdir.mk:33: recipe for target 'src/OV7670_control.o' failed
+make: *** [src/OV7670_control.o] Error 1
+
+11:29:08 Build Finished (took 1s.611ms)
+

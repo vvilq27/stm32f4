@@ -54,10 +54,11 @@ TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim6;
 
 UART_HandleTypeDef huart2;
+DMA_HandleTypeDef hdma_usart2_tx;
 
 /* USER CODE BEGIN PV */
 #define ROWS 240
-#define PIXS 321
+#define PIXS 320
 
 volatile uint16_t vsCnt, pxCnt;
 volatile uint16_t line;
@@ -69,6 +70,7 @@ uint8_t tab[ROWS][PIXS];
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
 static void MX_I2C2_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM2_Init(void);
@@ -83,18 +85,25 @@ static void MX_TIM6_Init(void);
 uint8_t data;
 
 void init() {
-//	for(int i = 0; i < 198 ; i ++){
-//		HAL_I2C_Mem_Write(&hi2c2, (0x21<<1), OV7670_reg[i][0], 1, &OV7670_reg[i][1], 1, 100);
-//		HAL_Delay(1);
-//		HAL_I2C_Mem_Read(&hi2c2, (0x21<<1), OV7670_reg[i][0], 1, &data, 1, 100);
-//	}
+	for(int i = 0; i < 198 ; i ++){
+		HAL_I2C_Mem_Write(&hi2c2, (0x21<<1), OV7670_reg[i][0], 1, &OV7670_reg[i][1], 1, 100);
+		HAL_Delay(1);
+		HAL_I2C_Mem_Read(&hi2c2, (0x21<<1), OV7670_reg[i][0], 1, &data, 1, 100);
+	}
 
-	HAL_I2C_Mem_Read(&hi2c2, (0x21<<1), 0x11, 1, &data, 1, 100);
-	HAL_Delay(10);
-	HAL_I2C_Mem_Read(&hi2c2, (0x21<<1), 0x12, 1, &data, 1, 100);
-	HAL_Delay(10);
-	HAL_I2C_Mem_Read(&hi2c2, (0x21<<1), 0x17, 1, &data, 1, 100);
-	HAL_Delay(10);
+//	HAL_I2C_Mem_Read(&hi2c2, (0x21<<1), 0x11, 1, &data, 1, 100);
+//	HAL_Delay(10);
+//	HAL_I2C_Mem_Write(&hi2c2, (0x21<<1), OV7670_reg[0][0], 1, &OV7670_reg[0][1], 1, 100);
+//	HAL_Delay(10);
+//	HAL_I2C_Mem_Write(&hi2c2, (0x21<<1), OV7670_reg[1][0], 1, &OV7670_reg[1][1], 1, 100);
+//	HAL_Delay(10);
+//	HAL_I2C_Mem_Write(&hi2c2, (0x21<<1), OV7670_reg[2][0], 1, &OV7670_reg[2][1], 1, 100);
+//	HAL_Delay(10);
+//
+//	HAL_I2C_Mem_Read(&hi2c2, (0x21<<1), 0x13, 1, &data, 1, 100);
+//	HAL_Delay(10);
+//	HAL_I2C_Mem_Read(&hi2c2, (0x21<<1), 0x17, 1, &data, 1, 100);
+//	HAL_Delay(10);
 }
 
 /* USER CODE END 0 */
@@ -128,6 +137,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_I2C2_Init();
   MX_USART2_UART_Init();
   MX_TIM2_Init();
@@ -138,7 +148,7 @@ int main(void)
   HAL_TIM_Base_Start(&htim2);
   HAL_TIM_PWM_Start(&htim2,TIM_CHANNEL_1);
 
-
+HAL_Delay(500);
   init();
 
   /* USER CODE END 2 */
@@ -166,67 +176,60 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  //pin toggle test
-	  while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_10) == GPIO_PIN_RESET ){
-		  while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_9) == GPIO_PIN_RESET);
+	  // send info from python which lines are broken, resend, hold until all ok
+	  while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_10) == GPIO_PIN_SET );
+	  while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_10) == GPIO_PIN_RESET );
+
+	  while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_10) == GPIO_PIN_SET ){
 
 		 while( (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_9) == GPIO_PIN_SET ) ){
-//			 while( (GPIOC->IDR & GPIO_PIN_8) == 0 );
-////			 tab[line][pxCnt++] = (GPIOC->IDR & 0xff);
-////			 HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_11);
-////			 HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_11);
-//
-//			 while( (GPIOC->IDR & GPIO_PIN_8) == GPIO_PIN_8 );
-////			 printf("%d,", (GPIOC->IDR & 0xff));
-//
-//			 while( (GPIOC->IDR & GPIO_PIN_8) == 0 );
-//			 while( (GPIOC->IDR & GPIO_PIN_8) == GPIO_PIN_8 );
+			 while( (GPIOC->IDR & GPIO_PIN_8) == 0 );
+			 tab[line][pxCnt++] = (GPIOC->IDR & 0xff);
+//			 HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_11);
+//			 HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_11);
+
+			 while( (GPIOC->IDR & GPIO_PIN_8) == GPIO_PIN_8 );
+			 while( (GPIOC->IDR & GPIO_PIN_8) == 0 );
+			 while( (GPIOC->IDR & GPIO_PIN_8) == GPIO_PIN_8 );
 		 }
 
-//		 printf("%d,", pxCnt);
 		 pxCnt = 0;
 
-//		 if(line < ROWS-1)
-		 if(line++ > 480){
+		 if(line == 0){
+			 HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_11);
+			 HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_11);
+		 }
+
+		 if(++line > ROWS){
 			 break;
 		 }
-
-//		 GPIOC->BSRR = GPIO_PIN_11;
-//		 GPIOC->BSRR = (uint32_t)GPIO_PIN_11 << 16;
-
-		 HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_11);
-		 HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_11);
-
 		 //line low
-		 while( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_9) == GPIO_PIN_RESET  ){
-			 if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_10) == GPIO_PIN_SET){
-				 break;
-			 }
-		 }
-
-
+		 while( HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_9) == GPIO_PIN_RESET && (line < ROWS));
 
 	  }//end of VS
 
-//		for(int i = 0; i < ROWS; i++){
-//			for(int j = 0; j < PIXS; j++){
-////				printf("%d,", tab[i][j]);
+
+//		 HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_11);
+
+//			for(uint8_t i = 0; i < ROWS; i++){
+//				printf("[%d,", i);
+//				for(uint16_t j = 0; j < PIXS; j += 4){
+//					uint32_t n = (tab[i][j] << 24) | (tab[i][j+1] << 16) | (tab[i][j+2] << 8) | tab[i][j+3];
+//					printf("%08x,", n);
+////					uint8_t n =  tab[i][j];
+////					HAL_UART_Transmit(&huart2, (uint8_t) n, 1, 1);
+////					HAL_UART_Transmit(&huart2, (uint8_t)  0x2b, 1, 1);
+//				}
+//				printf("%d\r\n", i);
 //			}
-////			printf("%d\r\n", i);
-//		}
+//		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_11);
+	  HAL_DMA_Start(&hdma_usart2_tx, (uint32_t)&data, (uint32_t)&(huart2.Instance->DR), 8);
 
-		 printf("\r\nhscnt: %d\r\n", line);
 		line = 0;
-
-		while(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_9) == GPIO_PIN_RESET);
-//		HAL_Delay(300);
-
-//		while( (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_9) == GPIO_PIN_RESET)  &&
-//						 (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_10) == GPIO_PIN_RESET));
 
 	 }// MAIN while
   /* USER CODE END 3 */
-}//main
+}
 
 /**
   * @brief System Clock Configuration
@@ -332,9 +335,9 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 1;
+  htim2.Init.Prescaler = 9;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 9;
+  htim2.Init.Period = 1;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
@@ -357,7 +360,7 @@ static void MX_TIM2_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM2;
-  sConfigOC.Pulse = 4;
+  sConfigOC.Pulse = 1;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
@@ -426,13 +429,13 @@ static void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 2000000;
+  huart2.Init.BaudRate = 1000000;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
   huart2.Init.Mode = UART_MODE_TX_RX;
   huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart2.Init.OverSampling = UART_OVERSAMPLING_8;
+  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
   if (HAL_UART_Init(&huart2) != HAL_OK)
   {
     Error_Handler();
@@ -440,6 +443,21 @@ static void MX_USART2_UART_Init(void)
   /* USER CODE BEGIN USART2_Init 2 */
 
   /* USER CODE END USART2_Init 2 */
+
+}
+
+/** 
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void) 
+{
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Stream6_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Stream6_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream6_IRQn);
 
 }
 
@@ -484,7 +502,7 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = GPIO_PIN_11;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 }
@@ -504,7 +522,7 @@ PUTCHAR_PROTOTYPE
 {
  /* Place your implementation of fputc here */
  /* e.g. write a character to the USART2 and Loop until the end of transmission */
- HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+ HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 1);
 
 return ch;
 }

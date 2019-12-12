@@ -1,0 +1,45 @@
+01:18:31 **** Incremental Build of configuration Debug for project cmsis_basic ****
+make -j12 all 
+Building file: ../startup/startup_stm32.s
+Building file: ../src/main.c
+Invoking: MCU GCC Assembler
+Invoking: MCU GCC Compiler
+C:\Users\arkadiusz.zelazowski\STMworkspace\cmsis_basic\Debug
+arm-none-eabi-as -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/StdPeriph_Driver/inc" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/inc" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/CMSIS/device" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/CMSIS/core" -g -o "startup/startup_stm32.o" "../startup/startup_stm32.s"
+C:\Users\arkadiusz.zelazowski\STMworkspace\cmsis_basic\Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DDEBUG -DSTM32F446xx -DUSE_STDPERIPH_DRIVER -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/StdPeriph_Driver/inc" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/inc" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/CMSIS/device" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/CMSIS/core" -O0 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+Building file: ../src/syscalls.c
+Building file: ../src/system_stm32f4xx.c
+Finished building: ../startup/startup_stm32.s
+Invoking: MCU GCC Compiler
+Invoking: MCU GCC Compiler
+ 
+C:\Users\arkadiusz.zelazowski\STMworkspace\cmsis_basic\Debug
+C:\Users\arkadiusz.zelazowski\STMworkspace\cmsis_basic\Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DDEBUG -DSTM32F446xx -DUSE_STDPERIPH_DRIVER -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/StdPeriph_Driver/inc" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/inc" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/CMSIS/device" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/CMSIS/core" -O0 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -MMD -MP -MF"src/syscalls.d" -MT"src/syscalls.o" -o "src/syscalls.o" "../src/syscalls.c"
+Finished building: ../src/main.c
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DDEBUG -DSTM32F446xx -DUSE_STDPERIPH_DRIVER -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/StdPeriph_Driver/inc" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/inc" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/CMSIS/device" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/CMSIS/core" -O0 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -MMD -MP -MF"src/system_stm32f4xx.d" -MT"src/system_stm32f4xx.o" -o "src/system_stm32f4xx.o" "../src/system_stm32f4xx.c"
+ 
+Building file: ../StdPeriph_Driver/src/misc.c
+Building file: ../StdPeriph_Driver/src/stm32f4xx_adc.c
+Invoking: MCU GCC Compiler
+../src/system_stm32f4xx.c: In function 'SetSysClock':
+../src/system_stm32f4xx.c:760:5: warning: this 'while' clause does not guard... [-Wmisleading-indentation]
+     while ((RCC->CFGR & (uint32_t)RCC_CFGR_SWS ) != RCC_CFGR_SWS_PLL);
+     ^~~~~
+../src/system_stm32f4xx.c:761:5: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the 'while'
+     {
+     ^
+Invoking: MCU GCC Compiler
+C:\Users\arkadiusz.zelazowski\STMworkspace\cmsis_basic\Debug
+Finished building: ../src/syscalls.c
+C:\Users\arkadiusz.zelazowski\STMworkspace\cmsis_basic\Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DDEBUG -DSTM32F446xx -DUSE_STDPERIPH_DRIVER -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/StdPeriph_Driver/inc" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/inc" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/CMSIS/device" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/CMSIS/core" -O0 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -MMD -MP -MF"StdPeriph_Driver/src/misc.d" -MT"StdPeriph_Driver/src/misc.o" -o "StdPeriph_Driver/src/misc.o" "../StdPeriph_Driver/src/misc.c"
+Finished building: ../src/system_stm32f4xx.c
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DSTM32 -DSTM32F4 -DSTM32F446RETx -DNUCLEO_F446RE -DDEBUG -DSTM32F446xx -DUSE_STDPERIPH_DRIVER -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/StdPeriph_Driver/inc" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/inc" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/CMSIS/device" -I"C:/Users/arkadiusz.zelazowski/STMworkspace/cmsis_basic/CMSIS/core" -O0 -g3 -Wall -fmessage-length=0 -ffunction-sections -c -MMD -MP -MF"StdPeriph_Driver/src/stm32f4xx_adc.d" -MT"StdPeriph_Driver/src/stm32f4xx_adc.o" -o "StdPeriph_Driver/src/stm32f4xx_adc.o" "../StdPeriph_Driver/src/stm32f4xx_adc.c"
+ 
+ 
+Command canceled
+
+01:18:36 Build Cancelled (took 5s.300ms)
+

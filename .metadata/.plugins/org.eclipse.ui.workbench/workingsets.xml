@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workingSetManager>
+<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1561319128137_2" label="basicSet" name="basicSet"/>
+<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1561478575965_3" label="ov7670_hal_fromYT" name="ov7670_hal_fromYT">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/DigitalCamera_STM32-master" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1561552340313_4" label="stm32_ov7670_bulk" name="stm32_ov7670_bulk">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/stm32-ov7670-master" type="4"/>
+</workingSet>
+<workingSet editPageId="org.eclipse.cdt.ui.CElementWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1564828346509_5" label="i2cBasic" name="i2cBasic">
+<item factoryID="org.eclipse.cdt.ui.PersistableCElementFactory" path="/i2c_basic" type="4"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1561050262635_0" label="Window Working Set" name="Aggregate for window 1561050262635"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1561294361199_1" label="Window Working Set" name="Aggregate for window 1561294361199"/>
+</workingSetManager>

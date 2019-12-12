@@ -1,0 +1,6 @@
+19:15:37 **** Incremental Build of configuration Debug for project stm32f446re_blinking_led ****
+make all 
+make: Nothing to be done for 'all'.
+
+19:15:38 Build Finished (took 807ms)
+
