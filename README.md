@@ -1,0 +1,3 @@
+# stm32f4
+
+<h1> MOTHAFUCKA LED PIN ON NUCLEO IS PA5</h1>
